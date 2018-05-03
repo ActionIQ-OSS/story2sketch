@@ -21,8 +21,7 @@ export const getSymbol = ({
     nodes = document.querySelector(querySelector);
   }
   
-  // START HACK FOR FONT-AWESOME SUPPORT
-  // TODO: Generalize for all :before, :after elements
+  // START HACK FOR PSEUDOELEMENTS
   const css = '.before-reset::before, .after-reset::after { display: none !important; }';
   const head = document.head || document.getElementsByTagName('head')[0];
   const style = document.createElement('style');
@@ -31,7 +30,7 @@ export const getSymbol = ({
   style.appendChild(document.createTextNode(css));
   head.appendChild(style);
 
-  const allElements = document.getElementsByClassName('fa');
+  const allElements = document.getElementsByTagName('span');
 
   for (let i = 0; i < allElements.length; i++) {
     const elementBeforeStyles = window.getComputedStyle(allElements[i], ':before');
@@ -57,7 +56,7 @@ export const getSymbol = ({
       allElements[i].appendChild(virtualAfter);
     }
   }
-  // END HACK FOR FONT-AWESOME SUPPORT
+  // END HACK FOR PSEUDOELEMENTS
 
   const layer = nodeTreeToSketchGroup(nodes, {
     getGroupName: getNodeName,
